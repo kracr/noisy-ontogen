@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noise Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>koala.owl</h1>
+    <form id="noise-form" action="/generate" method="post">
+        <label for="noise-type">Enter noise type:</label>
+        <select name="noise_type" id="noise-type">
+            {% for noise in noise_types %}
+                <option value="{{ noise }}">{{ noise }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <label for="noise-level">How much noise do you want to introduce?</label>
+        <input type="range" id="noise-level" name="noise_level" min="0" max="100" value="43" oninput="updateNoiseValue(this.value)">
+        <span id="noise-value">43%</span>
+        <br><br>
+        <button type="submit">Generate</button>
+    </form>
+    <script>
+        function updateNoiseValue(value) {
+            document.getElementById('noise-value').innerText = value + '%';
+        }
+    </script>
+</body>
+</html>

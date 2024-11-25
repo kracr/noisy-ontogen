@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>NoisyGen</h1>
+    <form action="/submit_path" method="post">
+        <input type="text" name="ontology_path" placeholder="Enter path to original ontology..." required>
+        <button type="submit">Next</button>
+    </form>
+</body>
+</html>
