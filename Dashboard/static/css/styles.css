@@ -57,6 +57,62 @@ input[type="range"] {
 #noise-value {
   font-weight: bold;
   color: #007BFF;
+  font-size: 36px;
+  margin-top: 24px;
+}
+
+/* Styling for the label */
+label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Styling for the file input */
+input[type="file"] {
+  width: 80%;
+  padding: 8px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+/* Custom styling for the submit button */
+button {
+  background-color: #007BFF;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Form Alignment */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  input[type="file"] {
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+    font-size: 14px;
+  }
 }
 
 /* Responsive Design */
