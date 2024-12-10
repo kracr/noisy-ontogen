@@ -45,6 +45,13 @@ def generate():
     noise_level = request.form['noise_level']
     print(f"\nSelected Noise Type: {noise_type}, Noise Level: {noise_level}\n")  # Print to console
 
+    file_name = os.listdir(app.config['UPLOAD_FOLDER'])[0]
+    noise_gen = IntersectionNoiseGenerator('../temp/'+file_name)
+    n = math.floor((noise_level / 100) * len(noise_gen.intersection_classes))  # Calculate the number of noise entities to introduce
+
+    noise_gen.introduce_noise(n)
+    noise_gen.save_ontology(f'../temp/noisy_{file_name}')
+
     return jsonify(success=True)
 
 if __name__ == '__main__':
