@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h1>koala.owl</h1>
+    <h1>{{ ontology_name }}</h1>
     <form id="noise-form" action="/generate" method="post">
         <label for="noise-type">Enter noise type:</label>
         <select name="noise_type" id="noise-type">

@@ -8,8 +8,9 @@
 </head>
 <body>
     <h1>NoisyGen</h1>
-    <form action="/submit_path" method="post">
-        <input type="text" name="ontology_path" placeholder="Enter path to original ontology..." required>
+    <form action="/submit_path" method="post" enctype="multipart/form-data">
+        <label for="ontology_file">Select ontology file:</label>
+        <input type="file" id="ontology_file" name="ontology_file" required>
         <button type="submit">Next</button>
     </form>
 </body>
