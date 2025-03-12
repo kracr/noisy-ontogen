@@ -1,7 +1,34 @@
 from owlready2 import *
 import random
 
-class IntersectionNoiseGenerator:
+class IntersectionNoiseGeneratorFactory:
+    """A class to generate noise in ontology intersections.
+    This class introduces noise in ontological intersections by creating entities that
+    belong to an intersection class but explicitly do not belong to its constituent classes,
+    thereby creating logical inconsistencies.
+    Parameters
+    ----------
+    ontology_path : str
+      File path to the input ontology
+    Methods
+    -------
+    find_intersection_classes()
+      Identifies all intersection classes in the ontology
+    introduce_noise(n)
+      Creates n noise entities that violate intersection axioms
+    save_ontology(output_path)
+      Saves the modified ontology to the specified path
+    generate(percentage, output_path)
+      Main method to generate noise based on percentage of intersections
+    Attributes
+    ----------
+    ontology_path : str
+      Path to the input ontology file
+    onto : owlready2.Ontology
+      Loaded ontology object
+    intersection_classes : list
+      List of tuples containing (intersection_class, class1, class2)
+    """
     def __init__(self, ontology_path):
         self.ontology_path = ontology_path
         self.onto = get_ontology(ontology_path).load()
@@ -27,6 +54,9 @@ class IntersectionNoiseGenerator:
             noise_entity.is_a.append(Not(class1))
             noise_entity.is_a.append(Not(class2))
 
+    def getNoiseSetSize(self):
+        return len(self.intersection_classes)
+
     def save_ontology(self, output_path):
         self.onto.save(file=output_path, format="rdfxml")
         print(f"Modified ontology saved to {output_path}")
@@ -37,10 +67,11 @@ class IntersectionNoiseGenerator:
         
         self.introduce_noise(n)
         self.save_ontology()
+
  
 if __name__ == "__main__":
     ontology_path = input("Enter the path to the ontology: ")
-    generator = IntersectionNoiseGenerator(ontology_path)
+    generator = IntersectionNoiseGeneratorFactory(ontology_path)
     generator.find_intersection_classes()
     
     for i in generator.intersection_classes:
