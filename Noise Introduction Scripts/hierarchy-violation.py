@@ -67,8 +67,14 @@ with onto:
         if disjoint_prop_name in onto.object_properties():
             NotSuperprop = onto[disjoint_prop_name]
         else:
+            # TODO: Dont create new class, S should be same as that axiom
+            # TODO: typeof NotSuperprop should be ObjectProperty
             NotSuperprop = types.new_class(disjoint_prop_name, (ObjectProperty,))
             # Declare disjointness
+            # TODO: dont assert both are disjoint, find all pairs of not(S) and assert manually
+            # TODO: lookup NegativeObjectPropertyAssertion for this
+            # TODO: Should we consider inferred relations or not?
+            # TODO: Do reverse lookup, search for papers that cite Box2EL, Owl2Vec, etc.
             AllDisjoint([superprop, NotSuperprop])
             print(f"Created new object property {NotSuperprop.name} disjoint with {superprop.name}")
         NotSuperprop[a].append(b)
