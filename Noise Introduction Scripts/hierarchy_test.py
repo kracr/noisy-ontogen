@@ -19,6 +19,18 @@ with onto:
     # Assert that R is a subproperty of S (i.e., R ⊆ S)
     R.is_a.append(S)
 
+    # Create sample individuals
+    a = Dummy("a")
+    b = Dummy("b")
+    c = Dummy("c")
+    d = Dummy("d")
+
+    # Assert that individual 'a' is related to 'b' by property R
+    a.R.append(b)
+
+    # Assert that individual 'c' is related to 'd' by property S
+    c.S.append(d)
+
 # Save the ontology to an OWL file in RDF/XML format
-onto.save(file = "dummy.owl", format = "rdfxml")
+onto.save(file="dummy.owl", format="rdfxml")
 print("Ontology saved as dummy.owl")

@@ -1,52 +1,56 @@
-# introduce_inconsistency.py
+#!/usr/bin/env python
 import sys
-from rdflib import Graph, Namespace, BNode, RDF, URIRef
+import os
+from rdflib import Graph, Namespace, BNode
 
-if len(sys.argv) < 2:
-    print("Usage: python introduce_inconsistency.py <ontology.owl>")
-    sys.exit(1)
+# Define common namespaces.
+RDF   = Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#")
+RDFS  = Namespace("http://www.w3.org/2000/01/rdf-schema#")
+OWL   = Namespace("http://www.w3.org/2002/07/owl#")
 
-# Load the input ontology (assumed to be in RDF/XML format)
-input_file = sys.argv[1]
-g = Graph()
-g.parse(input_file, format="xml")
+def add_negative_property_assertion(g, prop, subj, obj):
+    """
+    Adds a negative property assertion (NPA) to the graph.
+    This creates a blank node representing:
+      _:npa rdf:type owl:NegativePropertyAssertion .
+      _:npa owl:sourceIndividual subj .
+      _:npa owl:assertionProperty prop .
+      _:npa owl:targetIndividual obj .
+    """
+    npa = BNode()
+    g.add((npa, RDF.type, OWL.NegativePropertyAssertion))
+    g.add((npa, OWL.sourceIndividual, subj))
+    g.add((npa, OWL.assertionProperty, prop))
+    g.add((npa, OWL.targetIndividual, obj))
 
-# Define namespaces
-EX = Namespace("http://example.org/")
-RDFS = Namespace("http://www.w3.org/2000/01/rdf-schema#")
-OWL = Namespace("http://www.w3.org/2002/07/owl#")
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: python make_noisy_rdflib.py <ontology.owl>")
+        sys.exit(1)
 
-g.bind("ex", EX)
-g.bind("rdfs", RDFS)
-g.bind("owl", OWL)
-
-# Counter to generate unique individual names per R-S pair
-counter = 1
-
-# Find all property pairs (r, s) where r is a subproperty of s
-for r, _, s in g.triples((None, RDFS.subPropertyOf, None)):
-    # Create new individuals for the inconsistency tuple.
-    # We derive local names (if possible) from the property URIs.
-    r_local = str(r).split('#')[-1] if '#' in str(r) else str(r).split('/')[-1]
-    s_local = str(s).split('#')[-1] if '#' in str(s) else str(s).split('/')[-1]
+    ontology_path = sys.argv[1]
+    abs_path = os.path.abspath(ontology_path)
     
-    subj = URIRef(EX[f"inc_subject_{counter}_{r_local}"])
-    obj  = URIRef(EX[f"inc_object_{counter}_{r_local}"])
-    
-    # Add the positive assertion: (subj, r, obj)
-    g.add((subj, r, obj))
-    
-    # Create a blank node for the negative property assertion for s.
-    neg = BNode()
-    g.add((neg, RDF.type, OWL.NegativePropertyAssertion))
-    g.add((neg, OWL.sourceIndividual, subj))
-    g.add((neg, OWL.assertionProperty, s))
-    g.add((neg, OWL.targetIndividual, obj))
-    
-    print(f"Introduced inconsistency for property pair: {r_local} ⊆ {s_local}")
-    counter += 1
+    # Load the ontology.
+    g = Graph()
+    g.parse(abs_path, format="xml")  # assuming the input is in RDF/XML format
 
-# Save the modified ontology to a new file.
-output_file = "inconsistent.owl"
-g.serialize(destination=output_file, format="xml")
-print(f"Inconsistent ontology saved as {output_file}")
+    # CHANGE: Find all subproperty pairs: for every triple (R, rdfs:subPropertyOf, S)
+    subproperty_pairs = []
+    for R, _, S in g.triples((None, RDFS.subPropertyOf, None)):
+        subproperty_pairs.append((R, S))
+    
+    # For each subproperty pair (R, S), find all triples (subject, R, object)
+    # and add a negative property assertion for S.
+    for R, S in subproperty_pairs:
+        for subj, _, obj in g.triples((None, R, None)):
+            add_negative_property_assertion(g, S, subj, obj)
+
+    # Save the modified ontology with a new name "noisy_<original_name>.owl"
+    base_name = os.path.basename(ontology_path)
+    output_path = os.path.join(os.path.dirname(ontology_path), "noisy_" + base_name)
+    g.serialize(destination=output_path, format="xml")
+    print(f"Ontology saved as {output_path}")
+
+if __name__ == "__main__":
+    main()
