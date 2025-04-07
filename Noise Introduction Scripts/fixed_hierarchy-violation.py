@@ -39,6 +39,8 @@ def main():
     subproperty_pairs = []
     for R, _, S in g.triples((None, RDFS.subPropertyOf, None)):
         subproperty_pairs.append((R, S))
+    print('Subproperty pairs found:', len(subproperty_pairs))
+    # print('Subproperty pairs:', subproperty_pairs)
     
     # For each subproperty pair (R, S), find all triples (subject, R, object)
     # and add a negative property assertion for S.
