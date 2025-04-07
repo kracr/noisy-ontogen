@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://example.org/role_comp_dummy.owl"
+         xmlns="http://example.org/role_comp_dummy.owl#">
+
+<owl:Ontology rdf:about="http://example.org/role_comp_dummy.owl"/>
+
+<owl:ObjectProperty rdf:about="#EnrolledIn">
+  <rdfs:domain rdf:resource="#Student"/>
+  <rdfs:range rdf:resource="#Course"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#PrerequisiteOf">
+  <rdfs:domain rdf:resource="#Course"/>
+  <rdfs:range rdf:resource="#Course"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#Completed">
+  <rdfs:domain rdf:resource="#Student"/>
+  <rdfs:range rdf:resource="#Course"/>
+</owl:ObjectProperty>
+
+<owl:Class rdf:about="#Student">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Course">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:NamedIndividual rdf:about="#Alice">
+  <rdf:type>
+    <owl:Class>
+      <owl:complementOf>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#Completed"/>
+          <owl:hasValue rdf:resource="#Math102"/>
+        </owl:Restriction>
+      </owl:complementOf>
+    </owl:Class>
+  </rdf:type>
+  <rdf:type rdf:resource="#Student"/>
+  <EnrolledIn rdf:resource="#Math101"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Math101">
+  <rdf:type rdf:resource="#Course"/>
+  <PrerequisiteOf rdf:resource="#Math102"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Math102">
+  <rdf:type rdf:resource="#Course"/>
+</owl:NamedIndividual>
+
+
+</rdf:RDF>

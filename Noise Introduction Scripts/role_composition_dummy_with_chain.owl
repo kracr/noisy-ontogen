@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:ex="http://example.org/role_comp_dummy.owl#"
+   xmlns:owl="http://www.w3.org/2002/07/owl#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+>
+  <rdf:Description rdf:about="http://example.org/role_comp_dummy.owl#PrerequisiteOf">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/role_comp_dummy.owl#Course"/>
+    <rdfs:range rdf:resource="http://example.org/role_comp_dummy.owl#Course"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N612856b31e2b416ca1092c6b15679645">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/role_comp_dummy.owl#Completed"/>
+    <owl:hasValue rdf:resource="http://example.org/role_comp_dummy.owl#Math102"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/role_comp_dummy.owl#Math101">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/role_comp_dummy.owl#Course"/>
+    <ex:PrerequisiteOf rdf:resource="http://example.org/role_comp_dummy.owl#Math102"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/role_comp_dummy.owl#EnrolledIn">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/role_comp_dummy.owl#Student"/>
+    <rdfs:range rdf:resource="http://example.org/role_comp_dummy.owl#Course"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N06e57b81b45e4273b12b0b7fd5712d6f">
+    <rdf:first rdf:resource="http://example.org/role_comp_dummy.owl#EnrolledIn"/>
+    <rdf:rest rdf:nodeID="N329dbc2fc5bc49c693d7ded97ffb3a83"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/role_comp_dummy.owl#Alice">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:nodeID="Nd6285f74124a4f0ca2b5d1f0d745f36b"/>
+    <rdf:type rdf:resource="http://example.org/role_comp_dummy.owl#Student"/>
+    <ex:EnrolledIn rdf:resource="http://example.org/role_comp_dummy.owl#Math101"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N329dbc2fc5bc49c693d7ded97ffb3a83">
+    <rdf:first rdf:resource="http://example.org/role_comp_dummy.owl#PrerequisiteOf"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/role_comp_dummy.owl#Math102">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/role_comp_dummy.owl#Course"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nd6285f74124a4f0ca2b5d1f0d745f36b">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:complementOf rdf:nodeID="N612856b31e2b416ca1092c6b15679645"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/role_comp_dummy.owl#Completed">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/role_comp_dummy.owl#Student"/>
+    <rdfs:range rdf:resource="http://example.org/role_comp_dummy.owl#Course"/>
+    <owl:propertyChainAxiom rdf:nodeID="N06e57b81b45e4273b12b0b7fd5712d6f"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/role_comp_dummy.owl#Student">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/role_comp_dummy.owl">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/role_comp_dummy.owl#Course">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  </rdf:Description>
+</rdf:RDF>
